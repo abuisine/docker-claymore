@@ -1,19 +1,15 @@
-FROM ubuntu:17.04
+FROM abuisine/nvidia:17.04-375.66
 
 LABEL maintainer="Alexandre Buisine <alexandrejabuisine@gmail.com>"
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update \
- && apt-get install -yqq \
-	strace \
-	unzip \
+ && apt-get install -yqq --no-install-recommends \
 	vim-tiny \
 	flip \
-	nvidia-libopencl1-375 \
 	libcurl4-openssl-dev \
 	libcurl3 \
- && true
- # && apt-get -yqq clean \
- # && rm -rf /var/lib/apt/lists/*
+ && apt-get -yqq clean \
+ && rm -rf /var/lib/apt/lists/*
 
 ENV CLAYMORE_VERSION="9.7"
 

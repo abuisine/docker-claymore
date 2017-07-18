@@ -1,0 +1,12 @@
+version: '3.0'
+services:
+ claymore:
+  image: abuisine/claymore:9.7
+  restart: always
+  environment:
+   GPU_LIST: "01"
+  devices:
+   - /dev/nvidia0:/dev/nvidia0
+   - /dev/nvidia1:/dev/nvidia1
+   - /dev/nvidiactl:/dev/nvidiactl
+   - /dev/nvidia-uvm:/dev/nvidia-uvm
