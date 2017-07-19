@@ -6,7 +6,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update \
  && apt-get install -yqq --no-install-recommends \
 	vim-tiny \
 	flip \
-	libcurl4-openssl-dev \
 	libcurl3 \
  && apt-get -yqq clean \
  && rm -rf /var/lib/apt/lists/*
