@@ -7,14 +7,14 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update \
 	vim-tiny \
 	flip \
 	libcurl3 \
+	curl \
  && apt-get -yqq clean \
  && rm -rf /var/lib/apt/lists/*
 
 ENV CLAYMORE_VERSION="9.7"
 
 WORKDIR /home/claymore
-ADD https://github.com/nanopool/Claymore-Dual-Miner/releases/download/v${CLAYMORE_VERSION}/Claymore.s.Dual.Ethereum.Decred_Siacoin_Lbry_Pascal.AMD.NVIDIA.GPU.Miner.v${CLAYMORE_VERSION}.-.LINUX.tar.gz .
-
+RUN curl -Lks https://github.com/nanopool/Claymore-Dual-Miner/releases/download/v${CLAYMORE_VERSION}/Claymore.s.Dual.Ethereum.Decred_Siacoin_Lbry_Pascal.AMD.NVIDIA.GPU.Miner.v${CLAYMORE_VERSION}.-.LINUX.tar.gz | tar zxvf -
 # ENV GPU_FORCE_64BIT_PTR=0 GPU_MAX_HEAP_SIZE=100 GPU_USE_SYNC_OBJECTS=1 GPU_MAX_ALLOC_PERCENT=100 GPU_SINGLE_ALLOC_PERCENT=100
 
 COPY resources/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
