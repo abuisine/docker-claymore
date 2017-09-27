@@ -7,6 +7,9 @@ rm $EPOOLS || true
 
 CARDS=`nvidia-smi --query-gpu=memory.used,index,gpu_uuid --format=csv,noheader,nounits | tr -d ' '`
 
+# launch prometheus service
+/usr/local/bin/monitor.py -p 9090 &
+
 # will select first one
 for CARD in $CARDS
 do

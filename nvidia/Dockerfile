@@ -1,7 +1,7 @@
-FROM abuisine/nvidia:17.04-375.66-1
+FROM abuisine/nvidia:17.04-375.66-2
 
 LABEL maintainer="Alexandre Buisine <alexandrejabuisine@gmail.com>"
-LABEL version="9.8-nvidia-1"
+LABEL version="9.8-nvidia-2"
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update \
  && apt-get install -yqq --no-install-recommends \
