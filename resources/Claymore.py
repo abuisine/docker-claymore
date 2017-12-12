@@ -106,7 +106,7 @@ class MinerCollector:
 
 			#GAUGES
 			metric = GaugeMetricFamily(self.prefix + 'eth_hashrate_total_mhs', self.prefix_s + "ETH total hashrate", labels=self.labels.keys())
-			metric.add_metric(self.labels.values(), float(eth_hashrate_total_mhs))
+			metric.add_metric(self.labels.values(), float(eth_hashrate_total_mhs) / 1000)
 			yield metric
 			gpu_temperature_c, fan_speed_percent = stat[self.CLAYMORE_API_RESULT_TEMP_FAN].split(';', 2)
 			metric = GaugeMetricFamily(self.prefix + 'gpu_temperature_c', self.prefix_s + "GPU temperature", labels=self.labels.keys())
@@ -116,7 +116,7 @@ class MinerCollector:
 			metric.add_metric(self.labels.values(), float(fan_speed_percent))
 			yield metric
 
-			log.info('collected hashrate:%.1fMHs accepted:%d rejected:%d', float(eth_hashrate_total_mhs), int(eth_shares_accepted), int(eth_shares_rejected))
+			log.info('collected hashrate:%.3fMHs accepted:%d rejected:%d', float(eth_hashrate_total_mhs), int(eth_shares_accepted), int(eth_shares_rejected))
 
 		except Exception as e:
 			log.warning(e, exc_info=True)

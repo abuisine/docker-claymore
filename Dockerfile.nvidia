@@ -1,8 +1,8 @@
-FROM abuisine/nvidia:375.66-ubuntu1704-4
+FROM abuisine/nvidia:375.66-7
 
 ENV CLAYMORE_VERSION="10.0"
 
-LABEL maintainer="Alexandre Buisine <alexandrejabuisine@gmail.com>" version="${CLAYMORE_VERSION}-nvidia-2"
+LABEL maintainer="Alexandre Buisine <alexandrejabuisine@gmail.com>" version="${CLAYMORE_VERSION}-nvidia-3"
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update \
  && apt-get install -yqq --no-install-recommends \
