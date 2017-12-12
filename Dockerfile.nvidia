@@ -1,7 +1,8 @@
 FROM abuisine/nvidia:375.66-ubuntu1704-4
 
-LABEL maintainer="Alexandre Buisine <alexandrejabuisine@gmail.com>"
-LABEL version="10.0-nvidia-1"
+ENV CLAYMORE_VERSION="10.0"
+
+LABEL maintainer="Alexandre Buisine <alexandrejabuisine@gmail.com>" version="${CLAYMORE_VERSION}-nvidia-2"
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update \
  && apt-get install -yqq --no-install-recommends \
@@ -11,8 +12,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update \
 	curl \
  && apt-get -yqq clean \
  && rm -rf /var/lib/apt/lists/*
-
-ENV CLAYMORE_VERSION="10.0"
 
 WORKDIR /home/claymore
 RUN curl -Lks https://github.com/nanopool/Claymore-Dual-Miner/releases/download/v${CLAYMORE_VERSION}/Claymore.s.Dual.Ethereum.Decred_Siacoin_Lbry_Pascal.AMD.NVIDIA.GPU.Miner.v${CLAYMORE_VERSION}.-.LINUX.tar.gz | tar zxvf - \

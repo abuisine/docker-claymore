@@ -8,7 +8,7 @@ from prometheus_client.core import GaugeMetricFamily, CounterMetricFamily, REGIS
 
 from pynvml import *
 
-log = logging.getLogger('prometheus-claymore-exporter')
+log = logging.getLogger('claymore-exporter')
 
 def launch(args, metadata, gpu_uuid_short):
 
@@ -70,7 +70,6 @@ class MinerCollector:
 		return stat['result']
 
 	def collect(self):
-		log.info('collecting')
 		stat = self.getAPIStat()
 
 		if ( not stat ):
@@ -116,6 +115,8 @@ class MinerCollector:
 			metric = GaugeMetricFamily(self.prefix + 'fan_speed_percent', self.prefix_s + "GPU fan speed", labels=self.labels.keys())
 			metric.add_metric(self.labels.values(), float(fan_speed_percent))
 			yield metric
+
+			log.info('collected hashrate:%.1fMHs accepted:%d rejected:%d', float(eth_hashrate_total_mhs), int(eth_shares_accepted), int(eth_shares_rejected))
 
 		except Exception as e:
 			log.warning(e, exc_info=True)
