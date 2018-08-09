@@ -1,8 +1,14 @@
 FROM abuisine/nvidia:375.66-7
 
-ENV CLAYMORE_VERSION="10.0"
+ENV CLAYMORE_VERSION="11.8"
 
 LABEL maintainer="Alexandre Buisine <alexandrejabuisine@gmail.com>" version="${CLAYMORE_VERSION}-nvidia-3"
+
+# update ubuntu:1704 repositories which are EOL
+RUN echo "deb http://old-releases.ubuntu.com/ubuntu/ zesty main restricted universe multiverse" > /etc/apt/sources.list \
+ && echo "deb http://old-releases.ubuntu.com/ubuntu/ zesty-updates main restricted universe multiverse" >> /etc/apt/sources.list \
+ && echo "deb http://old-releases.ubuntu.com/ubuntu/ zesty-security main restricted universe multiverse" >> /etc/apt/sources.list \
+ && echo "deb http://old-releases.ubuntu.com/ubuntu/ zesty-backports main restricted universe multiverse" >> /etc/apt/sources.list
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update \
  && apt-get install -yqq --no-install-recommends \
@@ -14,7 +20,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update \
  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home/claymore
-RUN curl -Lks https://github.com/nanopool/Claymore-Dual-Miner/releases/download/v${CLAYMORE_VERSION}/Claymore.s.Dual.Ethereum.Decred_Siacoin_Lbry_Pascal.AMD.NVIDIA.GPU.Miner.v${CLAYMORE_VERSION}.-.LINUX.tar.gz | tar zxvf - \
+ENV CLAYMORE_FILENAME="https://github.com/nanopool/Claymore-Dual-Miner/releases/download/v${CLAYMORE_VERSION}/Claymore.s.Dual.Ethereum.Decred_Siacoin_Lbry_Pascal_Blake2s_Keccak.AMD.NVIDIA.GPU.Miner.v${CLAYMORE_VERSION}.-.LINUX.tar.gz"
+RUN curl -Lks ${CLAYMORE_FILENAME} | tar zxvf - --strip-components 1 \
  && for i in *bin; do ln $i e$i; done
 ENV GPU_FORCE_64BIT_PTR=0 GPU_MAX_HEAP_SIZE=100 GPU_USE_SYNC_OBJECTS=1 GPU_MAX_ALLOC_PERCENT=100 GPU_SINGLE_ALLOC_PERCENT=100
 
